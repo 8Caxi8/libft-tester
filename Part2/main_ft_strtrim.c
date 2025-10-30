@@ -6,7 +6,7 @@
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 18:23:40 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/30 13:07:49 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/10/30 18:12:00 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 #define GREEN "\033[92m"
 #define GREY  "\033[90m"
+#define YELLOW "\033[93m"
 #define BLACK_ON_GREEN "\033[1;30;102m"
 #define WHITE_ON_RED "\033[1;37;41m"
 #define ITALIC_BLUE "\033[3;34m"
@@ -43,7 +44,7 @@ int	main()
 	int				success = 0;
 	int				i = 0;
 	int				fd;
-	char			*function = "ft_strjoin";
+	char			*function = "ft_strtrim";
 
 	signal(SIGSEGV, segfault_handler);
 	
@@ -198,7 +199,10 @@ int	main()
 			free(sub);
 		}
 		else
-			printf(RED "✗ [%d] Testing for (\"%s\", \"%s\"). Expected: \"%s\" My own: (null)" RESET "\n", i, s1, set, exp);
+		{
+			printf(YELLOW "✓  [%d] Testing for (\"%s\", \"%s\"). Expected: \"%s\" My own: \"%s\"" RESET "\n", i, s1, set, exp, sub);
+			success++;
+		}
 	}
 	else
 		printf(RED "✗ [%d] Testing for (\"%s\", \"%s\"). Expected: \"%s\" My own: <<seg fault>>" RESET "\n", i, s1, set, exp);
