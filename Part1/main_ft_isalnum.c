@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_ft_isalnum.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caxi <caxi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 21:54:50 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/30 08:59:02 by caxi             ###   ########.fr       */
+/*   Updated: 2025/10/30 13:07:49 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main()
 	int		fd;
 	char	*function = "ft_isalnum";
 	
-	fd = open("res_log.txt", O_CREAT | O_WRONLY | O_APPEND, 0644);
+	fd = open("./build/res_log.txt", O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
 	{
 		printf("Failed to open file.");

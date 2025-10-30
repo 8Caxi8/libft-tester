@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_ft_strlcpy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caxi <caxi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 12:51:46 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/30 09:01:36 by caxi             ###   ########.fr       */
+/*   Updated: 2025/10/30 13:07:49 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
+#include <bsd/string.h>
 #include <signal.h>
 #include <setjmp.h>
 
@@ -52,7 +53,7 @@ int	main()
 	d3 = NULL;
 	signal(SIGSEGV, segfault_handler);
 	
-	fd = open("res_log.txt", O_CREAT | O_WRONLY | O_APPEND, 0644);
+	fd = open("./build/res_log.txt", O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
 	{
 		printf("Failed to open file.");

@@ -22,7 +22,7 @@ RESET="\033[0m"
 mkdir -p "$BUILD_DIR"
 : > "$BUILD_DIR/libft_build.log"
 : > "$BUILD_DIR/res_log.txt"
-: <<'END_COMMENT'
+#: <<'END_COMMENT'
 # =======================================================================================
 # =======================================================================================
 # BUILDING LIBFT
@@ -177,7 +177,7 @@ if [ ! -f "$LIBFT_DIR/libft.a" ]; then
 fi
 
 echo -e "${GREEN}\t ✓ ${GREY}Completed!\n${RESET}"
-END_COMMENT
+#END_COMMENT
 # =======================================================================================
 # =======================================================================================
 # TESTING PART 1 + PART 2
@@ -219,6 +219,69 @@ echo -e "${ITALIC_PURPLE}#######################################################
 echo -e "${ITALIC_PURPLE}          Testing PART 2 ..."
 echo -e "${ITALIC_PURPLE}########################################################${RESET}"
 for TEST_SRC in Part2/main_ft_*.c; do
+	FUNC_NAME=$(basename "$TEST_SRC")
+    FUNC_NAME=${FUNC_NAME#main_}
+	FUNC_NAME=${FUNC_NAME%.c}
+
+    echo -e "${ITALIC_BLUE}     ----------------------------------------------     ${RESET}"
+    echo -e "${ITALIC_BLUE}          Testing ${ITALIC_BLUE_BOLD}${FUNC_NAME}${RESET}${ITALIC_BLUE} ...  ${RESET}"
+    echo -e "${ITALIC_BLUE}     ----------------------------------------------     ${RESET}"
+
+    cc -Wall -Wextra -Werror "$TEST_SRC" -I "$LIBFT_DIR" "$LIB" -lbsd -o testing \
+        >> "$BUILD_DIR/libft_build.log" 2>&1
+
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}✗ [-1] Compilation error!${RESET}\n"
+        echo -e "${FUNC_NAME}.c Compilation error!" >> "$BUILD_DIR/res_log.log"
+		echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
+        continue
+    fi
+	norminette "$LIBFT_DIR/${FUNC_NAME}.c" >> "$BUILD_DIR/libft_build.log" 2>&1
+	if [ $? -ne 0 ]; then
+        echo -e "${RED}✗ [0] Norm error!${RESET}\n"
+        echo -e "${FUNC_NAME}.c Norm error!" >> "$BUILD_DIR/res_log.log"
+		echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
+        continue
+    fi
+    ./testing
+	rm -f testing
+done
+# =======================================================================================
+# =======================================================================================
+# TESTING BONUS PART
+# =======================================================================================
+# =======================================================================================
+echo -e "${ITALIC_BLUE}########################################################${RESET}"
+echo -e "${ITALIC_BLUE}          Testing BONUS ...  ${RESET}"
+echo -e "${ITALIC_BLUE}########################################################${RESET}\n"
+#------------------Test make bonus-------------------#
+echo -en "${GREY}\tMaking bonus:${RESET}"
+
+rm -f "$LIBFT_DIR"/*.o "$LIBFT_DIR"/libft.a
+make -qC "$LIBFT_DIR" -s bonus
+STATUS=$?
+if [ $STATUS -eq 0 ]; then
+	echo -e "${RED}\t✗ Make bonus not found!${RESET}"
+	exit 1
+fi
+
+make -C "$LIBFT_DIR" -s bonus > "$BUILD_DIR/libft_build.log" 2>&1
+
+for SRC in "$LIBFT_DIR"/*.c; do
+    OBJ="${SRC%.c}.o"
+    if [ ! -f "$OBJ" ]; then
+        echo -e "${RED}\t✗ Missing object file: $(basename "$OBJ")${RESET}"
+        exit 1
+    fi
+done
+if [ ! -f "$LIBFT_DIR/libft.a" ]; then
+        echo -e "${RED}\t✗ Missing object file: libft.a${RESET}"
+        exit 1
+fi
+
+echo -e "${GREEN}\t ✓ ${GREY}Completed!${RESET}"
+
+for TEST_SRC in Bonus/main_ft_*.c; do
 	FUNC_NAME=$(basename "$TEST_SRC")
     FUNC_NAME=${FUNC_NAME#main_}
 	FUNC_NAME=${FUNC_NAME%.c}

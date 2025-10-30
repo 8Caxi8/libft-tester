@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_ft_putchar_fd.c                               :+:      :+:    :+:   */
+/*   main_ft_putnbr_fd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/29 20:52:42 by caxi              #+#    #+#             */
+/*   Created: 2025/10/30 12:45:29 by dansimoe          #+#    #+#             */
 /*   Updated: 2025/10/30 13:07:49 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <fcntl.h>
+#include <limits.h>
 #include <signal.h>
 #include <setjmp.h>
 
@@ -37,14 +38,14 @@ void segfault_handler(int sig)
 int	main()
 {
 	int		fdt;
-	char	c;
+	int		nbr;
 	char	buffer[BUF_LEN];
 	char	*exp;
 	int		len;
 	int		success = 0;
 	int		i = 0;
 	int		fd;
-	char	*function = "ft_putchar_fd";
+	char	*function = "ft_putnbr_fd";
 	
 	signal(SIGSEGV, segfault_handler);
 	
@@ -56,78 +57,128 @@ int	main()
 	}
 	
 	///////////Test 1///////////
-	c = 'a';
-	exp = "a";
+	nbr = -2;
+	exp = "-2";
 	if (sigsetjmp(jump_buffer, 1) == 0)
 	{
 		fdt = open("test.txt", O_CREAT | O_WRONLY | O_APPEND, 0644);
-		ft_putchar_fd(c, fdt);
+		ft_putnbr_fd(nbr, fdt);
 		close (fdt);
 		fdt = open("test.txt", O_RDONLY);
 		len = read(fdt, buffer, BUF_LEN);
 		buffer[len] = 0;
 		if (strcmp(buffer, exp) == 0)
 		{
-			printf(GREEN "✓" GREY " [%d] Testing for '%c'. Expected: '%c' My own: '%s'" RESET "\n", i, c, c, buffer);
+			printf(GREEN "✓" GREY " [%d] Testing for %d. Expected: \"%s\" My own: \"%s\"" RESET "\n", i, nbr, exp, buffer);
 			success++;
 		}
 		else
-			printf(RED "✗ [%d] Testing for '%c'. Expected: '%c' My own: '%s'" RESET "\n", i, c, c, buffer);
+			printf(RED "✗ [%d] Testing for %d. Expected: \"%s\" My own: \"%s\"" RESET "\n", i, nbr, exp, buffer);
 		close(fdt);
 		unlink("test.txt");
 	}
 	else
-		printf(RED "✗ [%d] Testing for '%c'. Expected: '%c' My own: <<seg fault>>" RESET "\n", i, c, c);
+		printf(RED "✗ [%d] Testing for %d. Expected: \"%s\" My own: <<seg fault>>" RESET "\n", i, nbr, exp);
 	i++;
  
 	///////////Test 1///////////
-	c = '\t';
-	exp = "\t";
+	nbr = 0;
+	exp = "0";
 	if (sigsetjmp(jump_buffer, 1) == 0)
 	{
 		fdt = open("test.txt", O_CREAT | O_WRONLY | O_APPEND, 0644);
-		ft_putchar_fd(c, fdt);
+		ft_putnbr_fd(nbr, fdt);
 		close (fdt);
 		fdt = open("test.txt", O_RDONLY);
 		len = read(fdt, buffer, BUF_LEN);
 		buffer[len] = 0;
 		if (strcmp(buffer, exp) == 0)
 		{
-			printf(GREEN "✓" GREY " [%d] Testing for '%c'. Expected: '%c' My own: '%s'" RESET "\n", i, c, c, buffer);
+			printf(GREEN "✓" GREY " [%d] Testing for %d. Expected: \"%s\" My own: \"%s\"" RESET "\n", i, nbr, exp, buffer);
 			success++;
 		}
 		else
-			printf(RED "✗ [%d] Testing for '%c'. Expected: '%c' My own: '%s'" RESET "\n", i, c, c, buffer);
+			printf(RED "✗ [%d] Testing for %d. Expected: \"%s\" My own: \"%s\"" RESET "\n", i, nbr, exp, buffer);
 		close(fdt);
 		unlink("test.txt");
 	}
 	else
-		printf(RED "✗ [%d] Testing for '%c'. Expected: '%c' My own: <<seg fault>>" RESET "\n", i, c, c);
+		printf(RED "✗ [%d] Testing for %d. Expected: \"%s\" My own: <<seg fault>>" RESET "\n", i, nbr, exp);
 	i++;
 
 	///////////Test 1///////////
-	c = '\176';
-	exp = "\176";
+	nbr = 6;
+	exp = "6";
 	if (sigsetjmp(jump_buffer, 1) == 0)
 	{
 		fdt = open("test.txt", O_CREAT | O_WRONLY | O_APPEND, 0644);
-		ft_putchar_fd(c, fdt);
+		ft_putnbr_fd(nbr, fdt);
 		close (fdt);
 		fdt = open("test.txt", O_RDONLY);
 		len = read(fdt, buffer, BUF_LEN);
 		buffer[len] = 0;
 		if (strcmp(buffer, exp) == 0)
 		{
-			printf(GREEN "✓" GREY " [%d] Testing for '%c'. Expected: '%c' My own: '%s'" RESET "\n", i, c, c, buffer);
+			printf(GREEN "✓" GREY " [%d] Testing for %d. Expected: \"%s\" My own: \"%s\"" RESET "\n", i, nbr, exp, buffer);
 			success++;
 		}
 		else
-			printf(RED "✗ [%d] Testing for '%c'. Expected: '%c' My own: '%s'" RESET "\n", i, c, c, buffer);
+			printf(RED "✗ [%d] Testing for %d. Expected: \"%s\" My own: \"%s\"" RESET "\n", i, nbr, exp, buffer);
 		close(fdt);
 		unlink("test.txt");
 	}
 	else
-		printf(RED "✗ [%d] Testing for '%c'. Expected: '%c' My own: <<seg fault>>" RESET "\n", i, c, c);
+		printf(RED "✗ [%d] Testing for %d. Expected: \"%s\" My own: <<seg fault>>" RESET "\n", i, nbr, exp);
+	i++;
+
+	///////////Test 1///////////
+	nbr = INT_MAX;
+	exp = "2147483647";
+	if (sigsetjmp(jump_buffer, 1) == 0)
+	{
+		fdt = open("test.txt", O_CREAT | O_WRONLY | O_APPEND, 0644);
+		ft_putnbr_fd(nbr, fdt);
+		close (fdt);
+		fdt = open("test.txt", O_RDONLY);
+		len = read(fdt, buffer, BUF_LEN);
+		buffer[len] = 0;
+		if (strcmp(buffer, exp) == 0)
+		{
+			printf(GREEN "✓" GREY " [%d] Testing for %d. Expected: \"%s\" My own: \"%s\"" RESET "\n", i, nbr, exp, buffer);
+			success++;
+		}
+		else
+			printf(RED "✗ [%d] Testing for %d. Expected: \"%s\" My own: \"%s\"" RESET "\n", i, nbr, exp, buffer);
+		close(fdt);
+		unlink("test.txt");
+	}
+	else
+		printf(RED "✗ [%d] Testing for %d. Expected: \"%s\" My own: <<seg fault>>" RESET "\n", i, nbr, exp);
+	i++;
+
+	///////////Test 1///////////
+	nbr = INT_MIN;
+	exp = "-2147483648";
+	if (sigsetjmp(jump_buffer, 1) == 0)
+	{
+		fdt = open("test.txt", O_CREAT | O_WRONLY | O_APPEND, 0644);
+		ft_putnbr_fd(nbr, fdt);
+		close (fdt);
+		fdt = open("test.txt", O_RDONLY);
+		len = read(fdt, buffer, BUF_LEN);
+		buffer[len] = 0;
+		if (strcmp(buffer, exp) == 0)
+		{
+			printf(GREEN "✓" GREY " [%d] Testing for %d. Expected: \"%s\" My own: \"%s\"" RESET "\n", i, nbr, exp, buffer);
+			success++;
+		}
+		else
+			printf(RED "✗ [%d] Testing for %d. Expected: \"%s\" My own: \"%s\"" RESET "\n", i, nbr, exp, buffer);
+		close(fdt);
+		unlink("test.txt");
+	}
+	else
+		printf(RED "✗ [%d] Testing for %d. Expected: \"%s\" My own: <<seg fault>>" RESET "\n", i, nbr, exp);
 	i++;
 
 	///////////RESULT///////////
