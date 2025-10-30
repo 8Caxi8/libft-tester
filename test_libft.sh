@@ -316,9 +316,7 @@ for TEST_SRC in Bonus/main_ft_*.c; do
     echo -e "${ITALIC_BLUE}     ----------------------------------------------     ${RESET}"
     echo -e "${ITALIC_BLUE}          Testing ${ITALIC_BLUE_BOLD}${FUNC_NAME}${RESET}${ITALIC_BLUE} ...  ${RESET}"
     echo -e "${ITALIC_BLUE}     ----------------------------------------------     ${RESET}"
-read -p "press enter to continue to Part 1 ..."
-echo -ne "\033[1A"
-echo -ne "\033[2K"
+
     cc -Wall -Wextra -Werror "$TEST_SRC" -I "$LIBFT_DIR" "$LIB" -lbsd -o testing \
         >> "$BUILD_DIR/libft_build.log" 2>&1
 
