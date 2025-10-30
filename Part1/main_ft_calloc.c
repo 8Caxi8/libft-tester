@@ -6,13 +6,14 @@
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 01:05:53 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/30 13:07:49 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:25:13 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 #include <stdio.h>
 #include <limits.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>

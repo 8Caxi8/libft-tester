@@ -6,13 +6,14 @@
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 21:54:50 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/30 13:07:49 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:25:27 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <fcntl.h>
 
 #define GREEN "\033[92m"
