@@ -177,6 +177,11 @@ if [ ! -f "$LIBFT_DIR/libft.a" ]; then
 fi
 
 echo -e "${GREEN}\t ✓ ${GREY}Completed!\n${RESET}"
+
+read -p "press enter to continue to Part 1 ..."
+echo -ne "\033[1A"
+echo -ne "\033[2K"
+
 #END_COMMENT
 # =======================================================================================
 # =======================================================================================
@@ -215,6 +220,23 @@ for TEST_SRC in Part1/main_ft_*.c; do
 	rm -f testing
 done
 
+for true; do
+	read -t 0.1 -n 1 input
+	if [[ -n "$input" ]]; then
+		break
+	fi
+	echo -ne "\rWainting for Part 2 ."
+	sleep 0.3
+	echo -ne "\rWainting for Part 2 .." 
+	sleep 0.3
+	echo -ne "\rWainting for Part 2 ..." 
+	sleep 0.3
+done
+
+read -p "press enter to continue to Part 2 ..."
+echo -ne "\033[1A"
+echo -ne "\033[2K"
+
 echo -e "${ITALIC_PURPLE}########################################################${RESET}"
 echo -e "${ITALIC_PURPLE}          Testing PART 2 ..."
 echo -e "${ITALIC_PURPLE}########################################################${RESET}"
@@ -246,6 +268,11 @@ for TEST_SRC in Part2/main_ft_*.c; do
     ./testing
 	rm -f testing
 done
+
+read -p "press enter to continue to BONUS ..."
+echo -ne "\033[1A"
+echo -ne "\033[2K"
+
 # =======================================================================================
 # =======================================================================================
 # TESTING BONUS PART
@@ -289,7 +316,9 @@ for TEST_SRC in Bonus/main_ft_*.c; do
     echo -e "${ITALIC_BLUE}     ----------------------------------------------     ${RESET}"
     echo -e "${ITALIC_BLUE}          Testing ${ITALIC_BLUE_BOLD}${FUNC_NAME}${RESET}${ITALIC_BLUE} ...  ${RESET}"
     echo -e "${ITALIC_BLUE}     ----------------------------------------------     ${RESET}"
-
+read -p "press enter to continue to Part 1 ..."
+echo -ne "\033[1A"
+echo -ne "\033[2K"
     cc -Wall -Wextra -Werror "$TEST_SRC" -I "$LIBFT_DIR" "$LIB" -lbsd -o testing \
         >> "$BUILD_DIR/libft_build.log" 2>&1
 

@@ -6,7 +6,7 @@
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 22:03:39 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/30 14:25:42 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:21:34 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 #define GREEN "\033[92m"
 #define GREY  "\033[90m"
+#define YELLOW "\033[93m"
 #define BLACK_ON_GREEN "\033[1;30;102m"
 #define WHITE_ON_RED "\033[1;37;41m"
 #define ITALIC_BLUE "\033[3;34m"
@@ -46,6 +47,11 @@ int	main()
 		printf(GREEN "✓" GREY " [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
 		success++;
 	}
+	else if (ft_isprint(a) != 0)
+	{
+		printf(YELLOW "✓ [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
+		success++;
+	}
 	else
 		printf(RED "✗ [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i,  a, isprint(a), ft_isprint(a));
 	i++;
@@ -55,6 +61,11 @@ int	main()
 	if (isprint(a) - ft_isprint(a) == 0)
 	{
 		printf(GREEN "✓" GREY " [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
+		success++;
+	}
+	else if (ft_isprint(a) == 0)
+	{
+		printf(YELLOW "✓ [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
 		success++;
 	}
 	else
@@ -68,6 +79,11 @@ int	main()
 		printf(GREEN "✓" GREY " [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
 		success++;
 	}
+	else if (ft_isprint(a) == 0)
+	{
+		printf(YELLOW "✓ [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
+		success++;
+	}
 	else
 		printf(RED "✗ [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
 	i++;
@@ -77,6 +93,11 @@ int	main()
 	if (isprint(a) - ft_isprint(a) == 0)
 	{
 		printf(GREEN "✓" GREY " [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
+		success++;
+	}
+	else if (ft_isprint(a) != 0)
+	{
+		printf(YELLOW "✓ [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
 		success++;
 	}
 	else
@@ -90,6 +111,11 @@ int	main()
 		printf(GREEN "✓" GREY " [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
 		success++;
 	}
+	else if (ft_isprint(a) == 0)
+	{
+		printf(YELLOW "✓ [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
+		success++;
+	}
 	else
 		printf(RED "✗ [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
 	i++;
@@ -99,6 +125,11 @@ int	main()
 	if (isprint(a) - ft_isprint(a) == 0)
 	{
 		printf(GREEN "✓" GREY " [%d] Testing for %d. Original: %d My own: %d" RESET "\n",i,  a, isprint(a), ft_isprint(a));
+		success++;
+	}
+	else if (ft_isprint(a) == 0)
+	{
+		printf(YELLOW "✓ [%d] Testing for %d. Original: %d My own: %d" RESET "\n", i, a, isprint(a), ft_isprint(a));
 		success++;
 	}
 	else
