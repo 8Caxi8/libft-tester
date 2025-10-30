@@ -1,0 +1,69 @@
+Setting locale to en_US
+ft_atoi.c: OK!
+Setting locale to en_US
+ft_bzero.c: OK!
+Setting locale to en_US
+ft_calloc.c: OK!
+Setting locale to en_US
+ft_isalnum.c: OK!
+Setting locale to en_US
+ft_isalpha.c: OK!
+Setting locale to en_US
+ft_isascii.c: OK!
+Setting locale to en_US
+ft_isdigit.c: OK!
+Setting locale to en_US
+ft_isprint.c: OK!
+Setting locale to en_US
+ft_memchr.c: OK!
+Setting locale to en_US
+ft_memcmp.c: OK!
+Setting locale to en_US
+ft_memcpy.c: OK!
+Setting locale to en_US
+ft_memmove.c: OK!
+Setting locale to en_US
+ft_memset.c: OK!
+Setting locale to en_US
+ft_strchr.c: OK!
+Setting locale to en_US
+ft_strdup.c: OK!
+Setting locale to en_US
+ft_strlcat.c: OK!
+Setting locale to en_US
+ft_strlcpy.c: OK!
+Setting locale to en_US
+ft_strlen.c: OK!
+Setting locale to en_US
+ft_strncmp.c: OK!
+Setting locale to en_US
+ft_strnstr.c: OK!
+Setting locale to en_US
+ft_strrchr.c: OK!
+Setting locale to en_US
+ft_tolower.c: OK!
+Setting locale to en_US
+ft_toupper.c: OK!
+Setting locale to en_US
+ft_itoa.c: Error!
+Error: PREPROC_NO_SPACE     (line:  13, col:   9):	Missing space after preprocessor directive
+Error: SPC_BEFORE_NL        (line:  29, col:   9):	Space before newline
+Error: SPACE_EMPTY_LINE     (line:  39, col:   1):	Space on empty line
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o: in function `_start':
+(.text+0x1b): undefined reference to `main'
+collect2: error: ld returned 1 exit status
+Setting locale to en_US
+ft_split.c: Error!
+Error: SPC_BEFORE_NL        (line:  47, col:   2):	Space before newline
+Setting locale to en_US
+ft_striteri.c: OK!
+Setting locale to en_US
+ft_strjoin.c: OK!
+Setting locale to en_US
+ft_strmapi.c: OK!
+Setting locale to en_US
+ft_strnstr.c: OK!
+Setting locale to en_US
+ft_strtrim.c: OK!
+Setting locale to en_US
+ft_substr.c: OK!
