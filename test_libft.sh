@@ -22,7 +22,7 @@ RESET="\033[0m"
 mkdir -p "$BUILD_DIR"
 : > "$BUILD_DIR/libft_build.log"
 : > "$BUILD_DIR/res_log.txt"
-#: <<'END_COMMENT'
+: <<'END_COMMENT'
 # =======================================================================================
 # =======================================================================================
 # BUILDING LIBFT
@@ -307,7 +307,7 @@ if [ ! -f "$LIBFT_DIR/libft.a" ]; then
 fi
 
 echo -e "${GREEN}\t ✓ ${GREY}Completed!${RESET}"
-
+END_COMMENT
 for TEST_SRC in Bonus/main_ft_*.c; do
 	FUNC_NAME=$(basename "$TEST_SRC")
     FUNC_NAME=${FUNC_NAME#main_}
@@ -319,6 +319,11 @@ for TEST_SRC in Bonus/main_ft_*.c; do
 
     cc -Wall -Wextra -Werror "$TEST_SRC" -I "$LIBFT_DIR" "$LIB" -lbsd -o testing \
         >> "$BUILD_DIR/libft_build.log" 2>&1
+
+	if [ $? -ne 0 ]; then
+		cc -Wall -Wextra -Werror "$FUNC_NAME"_bonus.c -I "$LIBFT_DIR" "$LIB" -lbsd -o testing \
+        >> "$BUILD_DIR/libft_build.log" 2>&1
+	fi
 
     if [ $? -ne 0 ]; then
         echo -e "${RED}✗ [-1] Compilation error!${RESET}\n"
