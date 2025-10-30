@@ -6,7 +6,7 @@
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 14:51:30 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/30 13:07:49 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/10/30 18:03:58 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <string.h>
+#include <ctype.h>
 #include <fcntl.h>
 
 #define GREEN "\033[92m"
