@@ -6,7 +6,7 @@
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:29:15 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/31 01:15:11 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/10/31 16:01:42 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int	main()
 		}
 		else
 		{
-			printf(YELLOW "✓" GREY " [%d] Testing for (\"%s\", \"%s\"). Expected: \"%s\" My own: \"%s\"" RESET "\n", i, s1, s2, exp, sub);
+			printf(YELLOW "✓ [%d] Testing for (\"%s\", \"%s\"). Expected: \"%s\" My own: \"%s\"" RESET "\n", i, s1, s2, exp, sub);
 			success++;
 		}
 	}
@@ -203,7 +203,7 @@ int	main()
 		}
 		else
 		{
-			printf(YELLOW "✓" GREY " [%d] Testing for (\"%s\", \"%s\"). Expected: \"%s\" My own: \"%s\"" RESET "\n", i, s1, s2, exp, sub);
+			printf(YELLOW "✓ [%d] Testing for (\"%s\", \"%s\"). Expected: \"%s\" My own: \"%s\"" RESET "\n", i, s1, s2, exp, sub);
 			success++;
 		}
 	}

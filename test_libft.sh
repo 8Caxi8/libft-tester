@@ -341,13 +341,24 @@ for TEST_SRC in Bonus/main_ft_*.c; do
 		echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
         continue
     fi
-	norminette "$LIBFT_DIR/${FUNC_NAME}_bonus.c" >> "$BUILD_DIR/libft_build.log" 2>&1
-	if [ $? -ne 0 ]; then
-        echo -e "${RED}✗ [0] Norm error!${RESET}\n"
-        echo -e "${FUNC_NAME}.c Norm error! 0" >> "$BUILD_DIR/res_log.txt"
-		echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
-        continue
-    fi
+
+	if [ -f "$LIBFT_DIR/${FUNC_NAME}_bonus.c" ]; then
+		norminette "$LIBFT_DIR/${FUNC_NAME}_bonus.c" >> "$BUILD_DIR/libft_build.log" 2>&1
+		if [ $? -ne 0 ]; then
+        	echo -e "${RED}✗ [0] Norm error!${RESET}\n"
+        	echo -e "${FUNC_NAME}.c Norm error! 0" >> "$BUILD_DIR/res_log.txt"
+			echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
+        	continue
+    	fi
+	else
+		norminette "$LIBFT_DIR/${FUNC_NAME}.c" >> "$BUILD_DIR/libft_build.log" 2>&1
+		if [ $? -ne 0 ]; then
+        	echo -e "${RED}✗ [0] Norm error!${RESET}\n"
+        	echo -e "${FUNC_NAME}.c Norm error! 0" >> "$BUILD_DIR/res_log.txt"
+			echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
+        	continue
+    	fi
+	fi
     ./testing
 	rm -f testing
 done

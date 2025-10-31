@@ -6,7 +6,7 @@
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 03:03:00 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/31 01:15:11 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/10/31 16:00:55 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main()
 	int		success = 0;
 	int		i = 0;
 	int		fd;
-	char	*function = "ft_strchr";
+	char	*function = "ft_strdup";
 
 	signal(SIGSEGV, segfault_handler);
 	
