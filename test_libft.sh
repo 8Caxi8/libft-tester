@@ -4,12 +4,23 @@
 # Libft tester
 # ============
 
+cleanup() {
+    if [ ! -z "$BLINK_PID" ]; then
+        kill "$BLINK_PID" 2>/dev/null
+        wait "$BLINK_PID" 2>/dev/null
+    fi
+}
+trap cleanup EXIT INT TERM
+
 LIBFT_DIR=".."
 LIB="$LIBFT_DIR/libft.a"
 TEST_DIR="./mains"
 BUILD_DIR="./build"
 
 GREEN="\033[92m"
+ORANGE="\033[38;5;208m"
+YELLOW="\033[93m"
+BOLD_GREEN="\033[92;1m"
 GREY="\033[90m"
 BLACK_ON_GREEN="\033[1;30;102m"
 WHITE_ON_RED="\033[1;37;41m"
@@ -18,31 +29,20 @@ ITALIC_BLUE_BOLD="\033[3;34;1m"
 ITALIC_PURPLE="\033[3;35m"
 BOLD_PURPLE="\033[35;1m"
 RED="\033[91m"
+PURPLE="\033[95m"
+CYAN="\033[96m"
+BLUE="\033[94m"
 BOLD_RED="\033[91;1m"
+MAGENTA="\033[35m"
 RESET="\033[0m"
+PINK="\033[95;1m"
 start=$(date +%s)
-#: <<'END_COMMENT'
+
 mkdir -p "$BUILD_DIR"
 : > "$BUILD_DIR/libft_build.log"
 : > "$BUILD_DIR/res_log.txt"
 
-: <<'END_COMMENT'
-			Welcome
-				to
-					 _ _ _
-					||   ||
-					||	 ||
-					||   ||
-					||   |\			  ||
-					||   \\____		  || ||
-					||		   \\   __|| ||__
-					||         || //		 \\	
-					|\_________// \\_________//
-
-
-
-END_COMMENT
-
+makefile() {
 # =======================================================================================
 # =======================================================================================
 # BUILDING LIBFT
@@ -198,10 +198,16 @@ fi
 
 echo -e "${GREEN}\t ✓ ${GREY}Completed!\n${RESET}"
 
-read -p "press enter to continue to Part 1 ..."
-echo -ne "\033[1A"
-echo -ne "\033[2K"
-
+for arg in "$@"; do
+    if [[ "$arg" == *s* ]]; then
+    	read -p "press enter to continue to Part 1 ..."
+		echo -ne "\033[1A"
+		echo -ne "\033[2K"
+		break 
+    fi
+done
+}
+libh() {
 #END_COMMENT
 # =======================================================================================
 # =======================================================================================
@@ -223,6 +229,8 @@ echo -e "${ITALIC_PURPLE}#######################################################
 		echo -e "${BLACK_ON_GREEN} PASSED ${RESET}${ITALIC_BLUE} libft.h ${RESET}\n"
     fi
 
+}
+part1() {
 # =======================================================================================
 # =======================================================================================
 # TESTING PART 1 + PART 2
@@ -260,10 +268,16 @@ for TEST_SRC in Part1/main_ft_*.c; do
 	rm -f testing
 done
 
-read -p "press enter to continue to Part 2 ..."
-echo -ne "\033[1A"
-echo -ne "\033[2K"
-
+for arg in "$@"; do
+    if [[ "$arg" == *s* ]]; then
+        read -p "press enter to continue to Part 2 ..."
+		echo -ne "\033[1A"
+		echo -ne "\033[2K"
+		break 
+    fi
+done
+}
+part2() {
 echo -e "${ITALIC_PURPLE}########################################################${RESET}"
 echo -e "${ITALIC_PURPLE}          Testing PART 2 ..."
 echo -e "${ITALIC_PURPLE}########################################################${RESET}"
@@ -296,10 +310,16 @@ for TEST_SRC in Part2/main_ft_*.c; do
 	rm -f testing
 done
 
-read -p "press enter to continue to BONUS ..."
-echo -ne "\033[1A"
-echo -ne "\033[2K"
-
+for arg in "$@"; do
+    if [[ "$arg" == *s* ]]; then
+        read -p "press enter to continue to BONUS ..."
+		echo -ne "\033[1A"
+		echo -ne "\033[2K"
+		break 
+    fi
+done
+}
+bonus() {
 # =======================================================================================
 # =======================================================================================
 # TESTING BONUS PART
@@ -379,9 +399,10 @@ for TEST_SRC in Bonus/main_ft_*.c; do
     ./testing
 	rm -f testing
 done
-
+}
+res() {
+echo > ~/.gotcha
 make fclean -C "$LIBFT_DIR" -s >> "$BUILD_DIR/libft_build.log" 2>&1
-#END_COMMENT
 echo -e "${ITALIC_BLUE}     --------------------------------------------------------------------     ${RESET}"
 echo -e "${BOLD_PURPLE}                          Results:                            ${RESET}"
 echo -e "${ITALIC_BLUE}     --------------------------------------------------------------------     ${RESET}"
@@ -404,3 +425,136 @@ done < "./build/res_log.txt"
 end=$(date +%s)
 
 echo -e "${ITALIC_PURPLE}time passed: $((end - start)) sec ${RESET}"
+}
+
+if [ ! -f ~/.gotcha ]; then
+	echo -e "${ITALIC_PURPLE}           welcome${RESET}"
+	echo -e "${ITALIC_PURPLE}               to${RESET}"
+
+	printf "${RED} _____          _________       ______      __________    ____________  ${RESET}\n"
+	printf "${ORANGE}||   ||       //          \    /      \   /|         |\  //           \  ${RESET}\n"
+	printf "${YELLOW}||   ||       \___     __//   ||  __   |  ||   ______|/  \____     ___// ${RESET}\n"
+	printf "${GREEN}||   ||           \. ./       ||  \/  /   ||  ||             \  /     ${RESET}\n"
+	printf "${CYAN}||   ||           || ||       ||     /    ||  ||___          || |      ${RESET}\n"
+	printf "${BLUE}||   |\____       || ||       ||   <      ||    ___]         || |      ${RESET}\n"
+	printf "${PURPLE}||        \ \   __/' ' \___   ||  __ \    ||  ||             || |      ${RESET}\n"
+	printf "${MAGENTA}||         || //           \  ||  \/  |   ||  ||            /|| |\     ${RESET}\n"
+	printf "${PINK}|\________//  \___________//   \_____/    ||__||           /||| ||\    ${RESET}\n"
+
+	echo ""
+	echo ""
+	echo -ne "\r${BOLD_GREEN}Press enter to continue to start the test ...${RESET}\r"
+	sleep 1
+
+	while true; do
+		echo -ne "\r${BOLD_GREEN}Press enter to continue to start the test ...${RESET}\r"
+		sleep 0.5
+		echo -ne "\r                                                                   \r"
+		sleep 0.5
+	done &
+	BLINK_PID=$!
+	read -p ""
+	cleanup 
+
+	echo -ne "\033[1A"
+	echo -e "\r${GREY}Press enter to continue to start the test ...${RESET}\r"
+	echo -ne "${BOLD_RED}\tWait ...                          ${RESET}"
+	sleep 0.5
+	echo -e "${GREY}\r\tWait ...                                ${RESET}\r"
+	sleep 1
+
+	echo -ne "\r${BOLD_GREEN}Sorry I wasn't ready, now you can go ... ${RESET}\r"
+	sleep 1
+	while true; do
+		echo -ne "\r${BOLD_GREEN}Sorry I wasn't ready, now you can go ... ${RESET}\r"
+		sleep 0.5
+		echo -ne "\r                                                              \r"
+		sleep 0.5
+	done &
+	BLINK_PID=$!
+	read -p ""
+	cleanup 
+
+	echo -ne "\033[1A"
+	echo -e "\r${GREY}Sorry I wasn't ready, now you can go ... ${RESET}\r"
+	echo -ne "${BOLD_RED}\tWait ...                          ${RESET}"
+	sleep 0.5
+	echo -e "${GREY}\r\tWait ...                                ${RESET}\r"
+	sleep 1
+	while true; do
+		echo -ne "\r${BOLD_GREEN}\t\tAre you really ready ?? ${RESET}\r"
+		sleep 0.5
+		echo -ne "\r                                                 \r"
+		sleep 0.5
+	done &
+	BLINK_PID=$!
+	read -p ""
+	cleanup 
+
+	echo -ne "\033[1A"
+	echo -ne "\r${GREY}\t\tAre you really ready ?? ${RESET}\r"
+
+	while true; do
+		echo -ne "\r${GREY}\t\tAre you really ready ${RESET}${BOLD_PURPLE}=>${RESET}${BOLD_RED} Really ???${RESET}\r"
+		sleep 0.5
+		echo -ne "\r${GREY}\t\tAre you really ready ${RESET}${BOLD_PURPLE}=>${RESET}                               \r"
+		sleep 0.5
+	done &
+	BLINK_PID=$!
+	read -p ""
+	cleanup 
+
+	echo -ne "\033[1A"
+	echo -e "\r${GREY}\t\tAre you really ready => Really ???${RESET}\r"
+	echo -e "\r${ITALIC_PURPLE}You will not see this message again, so enjoy!! :D and ${RESET}${BOLD_GREEN}GOOD LUCK!${RESET}\r"
+	sleep 1
+	read -p "press enter to continue to start the test ..."
+	echo -ne "\033[1A"
+	echo -ne "\033[1A"
+	echo -ne "\r${GREY}\t(You will not see this message again, so enjoy!! :D and ${RESET}${BOLD_GREEN}GOOD LUCK!${RESET}\r"
+	echo -e "\033[2K"
+fi
+if [ -z "$1" -o "$1" = "-s" ]; then
+	makefile
+	libh
+	part1
+	part2
+	bonus
+	res
+	exit 0
+fi
+
+if [ "$1" ]; then
+	for arg in "$@"; do
+    	if [[ "$arg" == -*m* ]]; then
+        	makefile
+			break 
+    	fi
+	done
+	for arg in "$@"; do
+    	if [[ "$arg" == -*l* ]]; then
+        	libh
+			break 
+    	fi
+	done
+	for arg in "$@"; do
+    	if [[ "$arg" == -*p1* ]]; then
+        	part1
+			break 
+    	fi
+	done
+	for arg in "$@"; do
+    	if [[ "$arg" == -*p2* ]]; then
+        	part2
+			break 
+    	fi
+	done
+	for arg in "$@"; do
+    	if [[ "$arg" == -*b* ]]; then
+        	bonus
+			break 
+    	fi
+	done
+	res
+	exit 0
+fi
