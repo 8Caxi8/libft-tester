@@ -6,7 +6,7 @@
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 19:57:29 by dansimoe          #+#    #+#             */
-/*   Updated: 2025/10/30 20:35:03 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/10/31 01:15:11 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,11 @@ int	main()
 	t_list			*header;
 	t_list			*second;
 	t_list			*third;
-	t_list			*temp;
 	t_list			*new;
 	t_list			*sub;
 	char			*exp;
 	//int				expi[4];
 	//int				subi[4];
-	int				t;
 	int				j;
 	int				success = 0;
 	int				i = 0;
@@ -280,9 +278,9 @@ int	main()
 	write(fd, function, strlen(function));
 	write(fd, " ", 1);
 	if (success / i == 1)
-		write(fd, "OK :D\n", 6);
+		write(fd, "OK :D 1\n", 8);
 	else
-		write(fd, "KO :(\n", 6);
+		write(fd, "KO :( 0\n", 8);
 	close (fd);
 	return (0);
 }

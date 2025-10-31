@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_ft_lstsize.c                                  :+:      :+:    :+:   */
+/*   main_ft_lstclear.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/30 19:22:17 by dansimoe          #+#    #+#             */
+/*   Created: 2025/10/30 22:15:05 by dansimoe          #+#    #+#             */
 /*   Updated: 2025/10/31 01:15:11 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,8 +13,8 @@
 #include "../../libft.h"
 #include <stdio.h>
 #include <limits.h>
-#include <bsd/string.h>
 #include <fcntl.h>
+#include <bsd/string.h>
 #include <signal.h>
 #include <setjmp.h>
 
@@ -33,6 +33,7 @@ void segfault_handler(int sig)
     (void) sig;
     siglongjmp(jump_buffer, 1);
 }
+
 t_list	*lstnew(void *content)
 {
 	t_list	*list;
@@ -50,13 +51,11 @@ int	main()
 	t_list			*header;
 	t_list			*second;
 	t_list			*third;
-	int				size;
-	int				expi;
 	int				j;
 	int				success = 0;
 	int				i = 0;
 	int				fd;
-	char			*function = "ft_lstsize";
+	char			*function = "ft_lstclear";
 
 	signal(SIGSEGV, segfault_handler);
 	
@@ -69,139 +68,74 @@ int	main()
 	
 	///////////Test 1///////////
 	char	exp[4][1024] = {"ola", "tudo", "bem", "contigo?"};
-	char	sub[4][1024] = {"ola", "tudo", "bem", "contigo?"};
-	header = lstnew(sub[0]);
-	second = lstnew(sub[1]);
-	third = lstnew(sub[2]);
+	header = lstnew(ft_strdup("Ola"));
+	second = lstnew(ft_strdup("tudo"));
+	third = lstnew(ft_strdup("bem"));
 	header->next = second;
 	second->next = third;
-	expi = 3;
 	if (sigsetjmp(jump_buffer, 1) == 0)
 	{
-		size = ft_lstsize(header);
-		if (size == expi)
+		ft_lstclear(&header, &free);
+		header = NULL;
+		if (!header)
 		{
 			printf(GREEN "✓" GREY " [%d] ", i);
 			printf("Testing for: ");
 			j =-1;
-			while (++j < 3)
+			while (++j < 4)
 				printf("->\"%s\"", exp[j]);
-			printf(" Expected: %d My own: %d" RESET "\n", expi, size);
+			printf("Expected: ");
+			printf("empty");
+			printf(" My own: ");
+			printf("empty");
+			printf(RESET "\n");
 			success++;
-		}
-		else
-		{
-			printf(RED "✗ [%d] ", i);
-			printf("Testing for: ");
-			j =-1;
-			while (++j < 3)
-				printf("->\"%s\"", exp[j]);
-			printf(" Expected: %d My own: %d" RESET "\n", expi, size);
 		}
 	}
 	else
-	{
-		printf(RED "✗ [%d] ", i);
-		printf("Testing for: ");		
-		j =-1;
-		while (++j < 3)
-			printf("->\"%s\"", exp[j]);
-		printf(" Expected: %d My own: <<seg fault>>" RESET "\n", expi);
-	}
+		printf(RED "✗ [%d] Testing for \"%s\". Expected: \"%s\" My own: <<seg fault>>" RESET "\n", i, exp[0], exp[0]);
 	i++;
   
 	///////////Test 1///////////
-	header = lstnew(sub[0]);
-	expi = 1;
+	header = lstnew(ft_strdup("Ola"));
+	header->next = NULL;
 	if (sigsetjmp(jump_buffer, 1) == 0)
 	{
-		size = ft_lstsize(header);
-		if (size == expi)
+		ft_lstclear(&header, NULL);
+		if (header)
 		{
 			printf(GREEN "✓" GREY " [%d] ", i);
-			printf("Testing for: ");
-			j =-1;
-			while (++j < 1)
-				printf("->\"%s\"", exp[j]);
-			printf(" Expected: %d My own: %d" RESET "\n", expi, size);
+			printf("Testing for: del = (null) ");
+			printf("Expected: \"Ola\"");
+			printf(" My own: \"Ola\"");
+			printf(RESET "\n");
+			ft_lstclear(&header, &free);
 			success++;
-		}
-		else
-		{
-			printf(RED "✗ [%d] ", i);
-			printf("Testing for: ");
-			j =-1;
-			while (++j < 1)
-				printf("->\"%s\"", exp[j]);
-			printf(" Expected: %d My own: %d" RESET "\n", expi, size);
 		}
 	}
 	else
-	{
-		printf(RED "✗ [%d] ", i);
-		printf("Testing for: ");		
-		j =-1;
-		while (++j < 1)
-			printf("->\"%s\"", exp[j]);
-		printf(" Expected: %d My own: <<seg fault>>" RESET "\n", expi);
-	}
+		printf(RED "✗ [%d] Testing for \"%s\". Expected: \"%s\" My own: <<seg fault>>" RESET "\n", i, exp[0], exp[0]);
 	i++;
 
 	///////////Test 1///////////
-	header = lstnew(NULL);
-	second = lstnew(NULL);
-	header->next = second;
-	expi = 2;
+	header = lstnew(ft_strdup("Ola"));
+	header->next = NULL;
 	if (sigsetjmp(jump_buffer, 1) == 0)
 	{
-		size = ft_lstsize(header);
-		if (size == expi)
+		ft_lstclear(NULL, &free);
+		if (header)
 		{
 			printf(GREEN "✓" GREY " [%d] ", i);
-			printf("Testing for: ->\"(null)\"->\"(null)\"");
-			printf(" Expected: %d My own: %d" RESET "\n", expi, size);
+			printf("Testing for: header = (null) ");
+			printf("Expected: \"Ola\"");
+			printf(" My own: \"Ola\"");
+			printf(RESET "\n");
+			ft_lstclear(&header, &free);
 			success++;
-		}
-		else
-		{
-			printf(RED "✗ [%d] ", i);
-			printf("Testing for: ->\"(null)\"->\"(null)\"");
-			printf(" Expected: %d My own: %d" RESET "\n", expi, size);
 		}
 	}
 	else
-	{
-		printf(RED "✗ [%d] ", i);
-		printf("Testing for: ->\"(null)\"->\"(null)\"");
-		printf(" Expected: %d My own: <<seg fault>>" RESET "\n", expi);
-	}
-	i++;
-
-	///////////Test 1///////////
-	expi = 0;
-	if (sigsetjmp(jump_buffer, 1) == 0)
-	{
-		size = ft_lstsize(NULL);
-		if (size == expi)
-		{
-			printf(GREEN "✓" GREY " [%d] ", i);
-			printf("Testing for: (null)");
-			printf(" Expected: %d My own: %d" RESET "\n", expi, size);
-			success++;
-		}
-		else
-		{
-			printf(RED "✗ [%d] ", i);
-			printf("Testing for: (null)");
-			printf(" Expected: %d My own: %d" RESET "\n", expi, size);
-		}
-	}
-	else
-	{
-		printf(RED "✗ [%d] ", i);
-		printf("Testing for: (null)");
-		printf(" Expected: %d My own: <<seg fault>>" RESET "\n", expi);
-	}
+		printf(RED "✗ [%d] Testing for \"%s\". Expected: \"%s\" My own: <<seg fault>>" RESET "\n", i, exp[0], exp[0]);
 	i++;
 
 	///////////RESULT///////////

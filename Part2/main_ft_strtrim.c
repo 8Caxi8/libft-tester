@@ -6,7 +6,7 @@
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 18:23:40 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/30 18:12:00 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/10/31 01:15:11 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,9 +256,9 @@ int	main()
 	write(fd, function, strlen(function));
 	write(fd, " ", 1);
 	if (success / i == 1)
-		write(fd, "OK :D\n", 6);
+		write(fd, "OK :D 1\n", 8);
 	else
-		write(fd, "KO :(\n", 6);
+		write(fd, "KO :( 0\n", 8);
 	close (fd);
 	return (0);
 }
