@@ -44,14 +44,14 @@ echo -e "${GREEN}\t\t ✓ ${GREY}Found!${RESET}"
 #------------------Test libft.a-------------------#
 echo -en "${GREY}\tMaking libft.a:${RESET}"
 
-make -qC "$LIBFT_DIR" -s libft.a > "$BUILD_DIR/libft_build.log" 2>&1
+make -qC "$LIBFT_DIR" -s libft.a >> "$BUILD_DIR/libft_build.log" 2>&1
 STATUS=$?
 if [ $STATUS -eq 2 ]; then
 	echo -e "${RED}\t✗ Make libft.a not found!${RESET}"
 	exit 1
 fi
 
-make -C "$LIBFT_DIR" -s libft.a > "$BUILD_DIR/libft_build.log" 2>&1
+make -C "$LIBFT_DIR" -s libft.a >> "$BUILD_DIR/libft_build.log" 2>&1
 
 for SRC in "$LIBFT_DIR"/*.c; do
     if [[ $(basename "$SRC") == ft_lst* ]]; then
@@ -81,7 +81,7 @@ if [ $STATUS -eq 0 ]; then
 	exit 1
 fi
 
-make -C "$LIBFT_DIR" -s all > "$BUILD_DIR/libft_build.log" 2>&1
+make -C "$LIBFT_DIR" -s all >> "$BUILD_DIR/libft_build.log" 2>&1
 
 for SRC in "$LIBFT_DIR"/*.c; do
     if [[ $(basename "$SRC") == ft_lst* ]]; then
@@ -110,7 +110,7 @@ if [ $STATUS -eq 0 ]; then
 	exit 1
 fi
 
-make clean -C "$LIBFT_DIR" -s > "$BUILD_DIR/libft_build.log" 2>&1
+make clean -C "$LIBFT_DIR" -s >> "$BUILD_DIR/libft_build.log" 2>&1
 
 NUM_OBJ=$(find "$LIBFT_DIR" -name "*.o" | wc -l)
 NUM_OBJ=${NUM_OBJ:-0}
@@ -137,9 +137,9 @@ if [ $STATUS -eq 0 ]; then
 	exit 1
 fi
 
-make all -C "$LIBFT_DIR" -s > "$BUILD_DIR/libft_build.log" 2>&1
+make all -C "$LIBFT_DIR" -s >> "$BUILD_DIR/libft_build.log" 2>&1
 
-make fclean -C "$LIBFT_DIR" -s > "$BUILD_DIR/libft_build.log" 2>&1
+make fclean -C "$LIBFT_DIR" -s >> "$BUILD_DIR/libft_build.log" 2>&1
 
 NUM_OBJ=$(find "$LIBFT_DIR" \( -name "*.o" -o -name "libft.a" \) | wc -l)
 NUM_OBJ=${NUM_OBJ:-0}
@@ -161,7 +161,7 @@ if [ $STATUS -eq 0 ]; then
 	exit 1
 fi
 
-make -C "$LIBFT_DIR" -s re > "$BUILD_DIR/libft_build.log" 2>&1
+make -C "$LIBFT_DIR" -s re >> "$BUILD_DIR/libft_build.log" 2>&1
 
 for SRC in "$LIBFT_DIR"/*.c; do
     if [[ $(basename "$SRC") == ft_lst* ]]; then
@@ -186,6 +186,26 @@ echo -ne "\033[1A"
 echo -ne "\033[2K"
 
 #END_COMMENT
+# =======================================================================================
+# =======================================================================================
+# TESTING libft.h
+# =======================================================================================
+# =======================================================================================
+echo -e "${ITALIC_PURPLE}########################################################${RESET}"
+echo -e "${ITALIC_PURPLE}          Testing libft.h ..."
+echo -e "${ITALIC_PURPLE}########################################################${RESET}"
+
+	norminette -R CheckDefine "$LIBFT_DIR/libft.h" >> "$BUILD_DIR/libft_build.log" 2>&1
+	if [ $? -ne 0 ]; then
+        echo -e "${RED}✗ [0] Norm error!${RESET}\n"
+        echo -e "libft.h Norm error! 0" >> "$BUILD_DIR/res_log.txt"
+		echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} libft.h ${RESET}\n"
+	elif :; then
+		echo -e "${GREEN}✓ [0] ok! :D${RESET}\n"
+        echo -e "libft.h ok :D 1" >> "$BUILD_DIR/res_log.txt"
+		echo -e "${BLACK_ON_GREEN} PASSED ${RESET}${ITALIC_BLUE} libft.h ${RESET}\n"
+    fi
+
 # =======================================================================================
 # =======================================================================================
 # TESTING PART 1 + PART 2
@@ -282,7 +302,7 @@ if [ $STATUS -eq 0 ]; then
 	exit 1
 fi
 
-make -C "$LIBFT_DIR" -s bonus > "$BUILD_DIR/libft_build.log" 2>&1
+make -C "$LIBFT_DIR" -s bonus >> "$BUILD_DIR/libft_build.log" 2>&1
 
 for SRC in "$LIBFT_DIR"/*.c; do
     OBJ="${SRC%.c}.o"
@@ -332,7 +352,7 @@ for TEST_SRC in Bonus/main_ft_*.c; do
 	rm -f testing
 done
 
-make fclean -C "$LIBFT_DIR" -s > "$BUILD_DIR/libft_build.log" 2>&1
+make fclean -C "$LIBFT_DIR" -s >> "$BUILD_DIR/libft_build.log" 2>&1
 #END_COMMENT
 echo -e "${ITALIC_BLUE}     --------------------------------------------------------------------     ${RESET}"
 echo -e "${BOLD_PURPLE}                          Results:                            ${RESET}"
@@ -341,11 +361,11 @@ count=0;
 while read -r func status statuss num rest; do
     line_res="$func $status $statuss"
     if [[ $num -eq 0 ]]; then
-        echo -ne "${ITALIC_BLUE}$func${RESET} ${RED}$status $statuss${RESET}"
-		echo -ne "${BOLD_RED}|${RESET}"
+		echo -ne "${BOLD_RED}<<${RESET}"
+        echo -ne "${RED}$func $status $statuss${RESET}"
+		echo -ne "${BOLD_RED}>>${RESET}"
     elif [[ $num -eq 1 ]]; then
-        echo -ne "${ITALIC_BLUE}$func${RESET} ${GREEN}$status $statuss${RESET}"
-		echo -ne "${GREEN}/${RESET}"
+        echo -ne " ${ITALIC_BLUE}$func${RESET} ${GREEN}$status $statuss${RESET} "
     fi
 	((count++))
 	if (( count % 4 == 0 )); then
