@@ -38,27 +38,14 @@ RESET="\033[0m"
 PINK="\033[95;1m"
 start=$(date +%s)
 
+declare -i command=1
+
 mkdir -p "$BUILD_DIR"
 : > "$BUILD_DIR/libft_build.log"
 : > "$BUILD_DIR/res_log.txt"
 
-makefile() {
-# =======================================================================================
-# =======================================================================================
-# BUILDING LIBFT
-# =======================================================================================
-# =======================================================================================
-echo -e "${ITALIC_PURPLE}########################################################${RESET}"
-echo -e "${ITALIC_PURPLE}          Testing Makefile ...  ${RESET}"
-echo -e "${ITALIC_PURPLE}########################################################${RESET}\n"
-#------------------Test Makefile-------------------#
-echo -ne "${GREY}Makefile:"
-if [ ! -f "$LIBFT_DIR/Makefile" ]; then
-    echo -e "${RED}\t\t ✗ Missing!${RESET}"
-    exit 1
-fi
-echo -e "${GREEN}\t\t ✓ ${GREY}Found!${RESET}"
 #------------------Test libft.a-------------------#
+makelib() {
 echo -en "${GREY}\tMaking libft.a:${RESET}"
 
 make -qC "$LIBFT_DIR" -s libft.a >> "$BUILD_DIR/libft_build.log" 2>&1
@@ -87,7 +74,9 @@ if [ ! -f "$LIBFT_DIR/libft.a" ]; then
 fi
 
 echo -e "${GREEN}\t ✓ ${GREY}Completed!${RESET}"
+}
 #------------------Test all-------------------#
+makeall() {
 echo -en "${GREY}\tMaking all:${RESET}"
 
 rm -f "$LIBFT_DIR"/*.o "$LIBFT_DIR"/libft.a
@@ -117,7 +106,9 @@ if [ ! -f "$LIBFT_DIR/libft.a" ]; then
 fi
 
 echo -e "${GREEN}\t ✓ ${GREY}Completed!${RESET}"
+}
 #------------------Test clean-------------------#
+makeclean() {
 echo -en "${GREY}\tMaking clean:${RESET}"
 
 make -qC "$LIBFT_DIR" -s clean 
@@ -126,6 +117,8 @@ if [ $STATUS -eq 0 ]; then
 	echo -e "${RED}\t✗ Make clean not found!${RESET}"
 	exit 1
 fi
+
+make all -C "$LIBFT_DIR" -s >> "$BUILD_DIR/libft_build.log" 2>&1
 
 make clean -C "$LIBFT_DIR" -s >> "$BUILD_DIR/libft_build.log" 2>&1
 
@@ -143,7 +136,9 @@ if [ ! -f "$LIBFT_DIR/libft.a" ]; then
 fi
 
 echo -e "${GREEN}\t ✓ ${GREY}Completed!${RESET}"
+}
 #------------------Test fclean-------------------#
+makefclean() {
 echo -en "${GREY}\tMaking fclean:${RESET}"
 
 make -qC "$LIBFT_DIR" -s fclean 
@@ -167,7 +162,9 @@ if [ "$NUM_OBJ" -ne 0 ]; then
 fi
 
 echo -e "${GREEN}\t ✓ ${GREY}Completed!${RESET}"
+}
 #------------------Test re-------------------#
+makere() {
 echo -en "${GREY}\tMaking re:${RESET}"
 
 make -qC "$LIBFT_DIR" -s re
@@ -197,15 +194,33 @@ if [ ! -f "$LIBFT_DIR/libft.a" ]; then
 fi
 
 echo -e "${GREEN}\t ✓ ${GREY}Completed!\n${RESET}"
-
-for arg in "$@"; do
-    if [[ "$arg" == *s* ]]; then
-    	read -p "press enter to continue to Part 1 ..."
-		echo -ne "\033[1A"
-		echo -ne "\033[2K"
-		break 
-    fi
-done
+}
+makefile() {
+# =======================================================================================
+# =======================================================================================
+# BUILDING LIBFT
+# =======================================================================================
+# =======================================================================================
+echo -e "${ITALIC_PURPLE}########################################################${RESET}"
+echo -e "${ITALIC_PURPLE}          Testing Makefile ...  ${RESET}"
+echo -e "${ITALIC_PURPLE}########################################################${RESET}\n"
+#------------------Test Makefile-------------------#
+echo -ne "${GREY}Makefile:"
+if [ ! -f "$LIBFT_DIR/Makefile" ]; then
+    echo -e "${RED}\t\t ✗ Missing!${RESET}"
+    exit 1
+fi
+echo -e "${GREEN}\t\t ✓ ${GREY}Found!${RESET}"
+#------------------Test libft.a-------------------#
+makelib
+#------------------Test all-------------------#
+makeall
+#------------------Test clean-------------------#
+makeclean
+#------------------Test fclean-------------------#
+makefclean
+#------------------Test re-------------------#
+makere
 }
 libh() {
 #END_COMMENT
@@ -265,16 +280,8 @@ for TEST_SRC in Part1/main_ft_*.c; do
         continue
     fi
     ./testing
+	wait $!
 	rm -f testing
-done
-
-for arg in "$@"; do
-    if [[ "$arg" == *s* ]]; then
-        read -p "press enter to continue to Part 2 ..."
-		echo -ne "\033[1A"
-		echo -ne "\033[2K"
-		break 
-    fi
 done
 }
 part2() {
@@ -307,16 +314,8 @@ for TEST_SRC in Part2/main_ft_*.c; do
         continue
     fi
     ./testing
+	wait $!
 	rm -f testing
-done
-
-for arg in "$@"; do
-    if [[ "$arg" == *s* ]]; then
-        read -p "press enter to continue to BONUS ..."
-		echo -ne "\033[1A"
-		echo -ne "\033[2K"
-		break 
-    fi
 done
 }
 bonus() {
@@ -364,20 +363,15 @@ for TEST_SRC in Bonus/main_ft_*.c; do
     echo -e "${ITALIC_BLUE}          Testing ${ITALIC_BLUE_BOLD}${FUNC_NAME}${RESET}${ITALIC_BLUE} ...  ${RESET}"
     echo -e "${ITALIC_BLUE}     ----------------------------------------------     ${RESET}"
 
-    cc -Wall -Wextra -Werror "$TEST_SRC" -I "$LIBFT_DIR" "$LIB" -lbsd -o testing \
-        >> "$BUILD_DIR/libft_build.log" 2>&1
-
+	
+	cc -Wall -Wextra -Werror "$TEST_SRC" -I "$LIBFT_DIR" "$LIB" -lbsd -o testing \
+    >> "$BUILD_DIR/libft_build.log" 2>&1
 	if [ $? -ne 0 ]; then
-		cc -Wall -Wextra -Werror "$FUNC_NAME"_bonus.c -I "$LIBFT_DIR" "$LIB" -lbsd -o testing \
-        >> "$BUILD_DIR/libft_build.log" 2>&1
-	fi
-
-    if [ $? -ne 0 ]; then
-        echo -e "${RED}✗ [-1] Compilation error!${RESET}\n"
-        echo -e "${FUNC_NAME}.c Compilation error! 0" >> "$BUILD_DIR/res_log.txt"
+       	echo -e "${RED}✗ [-1] Compilation error!${RESET}\n"
+       	echo -e "${FUNC_NAME}.c Compilation error! 0" >> "$BUILD_DIR/res_log.txt"
 		echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
-        continue
-    fi
+       	continue
+	fi
 
 	if [ -f "$LIBFT_DIR/${FUNC_NAME}_bonus.c" ]; then
 		norminette "$LIBFT_DIR/${FUNC_NAME}_bonus.c" >> "$BUILD_DIR/libft_build.log" 2>&1
@@ -397,9 +391,11 @@ for TEST_SRC in Bonus/main_ft_*.c; do
     	fi
 	fi
     ./testing
+	wait $!
 	rm -f testing
 done
 }
+
 res() {
 echo > ~/.gotcha
 make fclean -C "$LIBFT_DIR" -s >> "$BUILD_DIR/libft_build.log" 2>&1
@@ -424,7 +420,17 @@ done < "./build/res_log.txt"
 
 end=$(date +%s)
 
-echo -e "${ITALIC_PURPLE}time passed: $((end - start)) sec ${RESET}"
+echo -e "\n\n${ITALIC_PURPLE}running time: $((end - start)) sec ${RESET}"
+}
+
+stop() {
+    read -p "press enter to continue ..."
+	echo -ne "\033[1A"
+	echo -ne "\033[2K"
+}
+
+runstep() {
+	(( command -lt 0 )) && stop
 }
 
 if [ ! -f ~/.gotcha ]; then
@@ -514,47 +520,40 @@ if [ ! -f ~/.gotcha ]; then
 	echo -ne "\r${GREY}\t(You will not see this message again, so enjoy!! :D and ${RESET}${BOLD_GREEN}GOOD LUCK!${RESET}\r"
 	echo -e "\033[2K"
 fi
-if [ -z "$1" -o "$1" = "-s" ]; then
-	makefile
-	libh
-	part1
-	part2
-	bonus
-	res
-	exit 0
-fi
 
-if [ "$1" ]; then
-	for arg in "$@"; do
-    	if [[ "$arg" == -*m* ]]; then
-        	makefile
-			break 
-    	fi
-	done
-	for arg in "$@"; do
-    	if [[ "$arg" == -*l* ]]; then
-        	libh
-			break 
-    	fi
-	done
-	for arg in "$@"; do
-    	if [[ "$arg" == -*p1* ]]; then
-        	part1
-			break 
-    	fi
-	done
-	for arg in "$@"; do
-    	if [[ "$arg" == -*p2* ]]; then
-        	part2
-			break 
-    	fi
-	done
-	for arg in "$@"; do
-    	if [[ "$arg" == -*b* ]]; then
-        	bonus
-			break 
-    	fi
-	done
-	res
-	exit 0
+for arg in "$@"; do
+    [[ "$arg" == -*m* ]] && (( command *= 2 ))
+    [[ "$arg" == -*l* ]] && (( command *= 3 ))
+	[[ "$arg" == -*p1* ]] && (( command *= 5 ))
+	[[ "$arg" == -*p2* ]] && (( command *= 7 ))
+	[[ "$arg" == -*b* ]] && (( command *= 11 ))
+    [[ "$arg" == -*s* ]] && (( command > 0 )) && (( command *= -1 ))
+done
+
+stop() {
+    read -p "press enter to continue ..."
+	echo -ne "\033[1A"
+	echo -ne "\033[2K"
+}
+
+run_step() {
+	"$@"
+	(( command < 0 )) && stop
+}
+
+if (( command == 1 )) || (( command == -1 )); then
+	run_step makefile
+	libh
+	run_step part1
+	run_step part2
+	bonus
+else
+	(( command % 2 == 0 )) && run_step makefile
+	(( command % 3 == 0 )) && libh
+	(( command % 5 == 0 )) && makelib
+	(( command % 5 == 0 )) && run_step part1
+	(( command % 7 == 0 )) && makelib
+	(( command % 7 == 0 )) && run_step part2
+	(( command % 11 == 0 )) && bonus
 fi
+res

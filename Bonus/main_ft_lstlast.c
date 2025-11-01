@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_ft_lstlast.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: caxi <caxi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 19:57:29 by dansimoe          #+#    #+#             */
-/*   Updated: 2025/10/31 01:15:11 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/11/01 20:04:57 by caxi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,6 @@ int	main()
 	t_list			*third;
 	t_list			*new;
 	t_list			*sub;
-	char			*exp;
-	//int				expi[4];
-	//int				subi[4];
 	int				j;
 	int				success = 0;
 	int				i = 0;
@@ -72,7 +69,6 @@ int	main()
 	}
 	
 	///////////Test 1///////////
-	exp = "contigo?";
 	char	s[4][1024] = {"ola", "tudo", "bem", "contigo?"};
 	header = lstnew(s[0]);
 	second = lstnew(s[1]);
@@ -132,7 +128,6 @@ int	main()
 	i++;
 
 	///////////Test 1///////////
-	exp = "contigo?";
 	size_t	s1[3] = {0, 42, SIZE_MAX};
 	header = lstnew(s[0]);
 	second = lstnew(s[1]);
@@ -190,7 +185,6 @@ int	main()
 	i++;
 
 	///////////Test 1///////////
-	exp = "contigo?";
 	char	s2[4][1024] = {"ola", "tudo", "bem", "contigo?"};
 	header = lstnew(s[3]);
 	if (sigsetjmp(jump_buffer, 1) == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_ft_lstdelone.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: caxi <caxi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 20:50:51 by dansimoe          #+#    #+#             */
-/*   Updated: 2025/10/31 01:15:11 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/11/01 20:02:06 by caxi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static sigjmp_buf jump_buffer;
 
 void del(void *s)
 {
+	(void) s,
 	s = NULL;
 }
 
