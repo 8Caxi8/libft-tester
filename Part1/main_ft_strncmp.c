@@ -6,7 +6,7 @@
 /*   By: dansimoe <dansimoe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:36:10 by caxi              #+#    #+#             */
-/*   Updated: 2025/10/31 01:15:11 by dansimoe         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:24:05 by dansimoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,20 @@ int	main()
 	
 	///////////Test 6///////////
 	s1 = "Olaa";
-	s2 = "Ossd";
+	s2 = "O\200ssd";
+	n = 5;
+	if (strncmp(s1, s2, n) == ft_strncmp(s1, s2, n))
+	{
+		printf(GREEN "✓" GREY " [%d] Testing for (\"%s\", \"%s\", %lu). Original: %d My own: %d" RESET "\n", i, s1, s2, n, strncmp(s1, s2, n), ft_strncmp(s1, s2, n));
+		success++;
+	}
+	else
+		printf(RED "✗ [%d] Testing for (\"%s\", \"%s\", %lu). Original: %d My own: %d" RESET "\n", i, s1, s2, n, strncmp(s1, s2, n), ft_strncmp(s1, s2, n));
+	i++;
+
+	///////////Test 6///////////
+	s1 = "Olaa";
+	s2 = "O\200ssd";
 	n = 0;
 	if (strncmp(s1, s2, n) == ft_strncmp(s1, s2, n))
 	{
