@@ -170,11 +170,37 @@ int	main()
 	if (sigsetjmp(jump_buffer, 1) == 0) 
 	{
 		b = (char *)ft_memmove(NULL, t0, n);
-        printf(RED "✗ [%d] Testing for %s. Original: <<seg fault>> My own: %s" RESET "\n", i, t3, b);
+        printf(RED "✗ [%d] Testing for (null, %s, %lu). Original: <<seg fault>> My own: %s" RESET "\n", i, t0, n, b);
 	}
 	else 
 	{
-        printf(GREEN "✓" GREY " [%d] Testing for %s. Original: <<seg fault>> My own: <<seg fault>>" RESET "\n", i, t3);
+        printf(GREEN "✓" GREY " [%d] Testing for (null, %s, %lu). Original: <<seg fault>> My own: <<seg fault>>" RESET "\n", i, t0, n);
+		success++;
+    }
+	i++;
+
+	///////////Test 5///////////
+	if (sigsetjmp(jump_buffer, 1) == 0) 
+	{
+		b = (char *)ft_memmove(a, t3, n);
+        printf(RED "✗ [%d] Testing for (%s, null, %lu). Original: <<seg fault>> My own: %s" RESET "\n", i, a, n, b);
+	}
+	else 
+	{
+        printf(GREEN "✓" GREY " [%d] Testing for (%s, null, %lu). Original: <<seg fault>> My own: <<seg fault>>" RESET "\n", i, a, n);
+		success++;
+    }
+	i++;
+
+	///////////Test 5///////////
+	if (sigsetjmp(jump_buffer, 1) == 0) 
+	{
+		b = (char *)ft_memmove(NULL, NULL, n);
+        printf(RED "✗ [%d] Testing for (null, null, %lu). Original: <<seg fault>> My own: %s" RESET "\n", i, n, b);
+	}
+	else 
+	{
+        printf(GREEN "✓" GREY " [%d] Testing for (null, null, %lu). Original: <<seg fault>> My own: <<seg fault>>" RESET "\n", i, n);
 		success++;
     }
 	i++;
