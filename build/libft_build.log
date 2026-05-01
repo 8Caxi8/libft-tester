@@ -1,0 +1,92 @@
+Setting locale to en_US
+libft.h: OK!
+Setting locale to en_US
+ft_atoi.c: OK!
+Setting locale to en_US
+ft_bzero.c: OK!
+Setting locale to en_US
+ft_calloc.c: OK!
+Setting locale to en_US
+ft_isalnum.c: OK!
+Setting locale to en_US
+ft_isalpha.c: OK!
+Setting locale to en_US
+ft_isascii.c: OK!
+Setting locale to en_US
+ft_isdigit.c: OK!
+Setting locale to en_US
+ft_isprint.c: OK!
+Setting locale to en_US
+ft_memchr.c: OK!
+Setting locale to en_US
+ft_memcmp.c: OK!
+Setting locale to en_US
+ft_memcpy.c: OK!
+Setting locale to en_US
+ft_memmove.c: OK!
+Setting locale to en_US
+ft_memset.c: OK!
+Setting locale to en_US
+ft_strchr.c: OK!
+Setting locale to en_US
+ft_strdup.c: OK!
+Setting locale to en_US
+ft_strlcat.c: OK!
+Setting locale to en_US
+ft_strlcpy.c: OK!
+Setting locale to en_US
+ft_strlen.c: OK!
+Setting locale to en_US
+ft_strncmp.c: OK!
+Setting locale to en_US
+ft_strnstr.c: OK!
+Setting locale to en_US
+ft_strrchr.c: OK!
+Setting locale to en_US
+ft_tolower.c: OK!
+Setting locale to en_US
+ft_toupper.c: OK!
+Setting locale to en_US
+ft_itoa.c: OK!
+Setting locale to en_US
+ft_putchar_fd.c: OK!
+Setting locale to en_US
+ft_putendl_fd.c: OK!
+Setting locale to en_US
+ft_putnbr_fd.c: OK!
+Setting locale to en_US
+ft_putstr_fd.c: OK!
+Setting locale to en_US
+ft_split.c: OK!
+Setting locale to en_US
+ft_striteri.c: OK!
+Setting locale to en_US
+ft_strjoin.c: OK!
+Setting locale to en_US
+ft_strmapi.c: OK!
+Setting locale to en_US
+ft_strnstr.c: OK!
+Setting locale to en_US
+ft_strtrim.c: OK!
+Setting locale to en_US
+ft_substr.c: OK!
+Setting locale to en_US
+ft_lstadd_back.c: OK!
+Setting locale to en_US
+ft_lstadd_front.c: OK!
+Setting locale to en_US
+ft_lstclear.c: OK!
+Setting locale to en_US
+ft_lstdelone.c: OK!
+Setting locale to en_US
+ft_lstiter.c: OK!
+Part3/main_ft_lstlast.c:131:25: error: use of undeclared identifier 'SIZE_MAX'
+        size_t  s1[3] = {0, 42, SIZE_MAX};
+                                ^
+1 error generated.
+Setting locale to en_US
+ft_lstmap.c: OK!
+Setting locale to en_US
+ft_lstnew.c: OK!
+Setting locale to en_US
+ft_lstsize.c: OK!

@@ -337,44 +337,12 @@ part2()
 	done
 }
 
-bonus() 
+part3() 
 {
-	# =======================================================================================
-	# =======================================================================================
-	# TESTING BONUS PART
-	# =======================================================================================
-	# =======================================================================================
 	echo -e "${ITALIC_PURPLE}########################################################${RESET}"
-	echo -e "${ITALIC_PURPLE}          Testing BONUS ...  ${RESET}"
-	echo -e "${ITALIC_PURPLE}########################################################${RESET}\n"
-	#------------------Test make bonus-------------------#
-	echo -en "${GREY}\tMaking bonus:${RESET}"
-
-	rm -f "$LIBFT_DIR"/*.o "$LIBFT_DIR"/libft.a
-	make -qC "$LIBFT_DIR" -s bonus
-	STATUS=$?
-	if [ $STATUS -eq 0 ]; then
-		echo -e "${RED}\t✗ Make bonus not found!${RESET}"
-		exit 1
-	fi
-
-	make -C "$LIBFT_DIR" -s bonus >> "$BUILD_DIR/libft_build.log" 2>&1
-
-	for SRC in "$LIBFT_DIR"/*.c; do
-	    OBJ="${SRC%.c}.o"
-	    if [ ! -f "$OBJ" ]; then
-	        echo -e "${RED}\t✗ Missing object file: $(basename "$OBJ")${RESET}"
-	        exit 1
-	    fi
-	done
-	if [ ! -f "$LIBFT_DIR/libft.a" ]; then
-	        echo -e "${RED}\t✗ Missing object file: libft.a${RESET}"
-	        exit 1
-	fi
-
-	echo -e "${GREEN}\t ✓ ${GREY}Completed!${RESET}"
-
-	for TEST_SRC in Bonus/main_ft_*.c; do
+	echo -e "${ITALIC_PURPLE}          Testing PART 3 ..."
+	echo -e "${ITALIC_PURPLE}########################################################${RESET}"
+	for TEST_SRC in Part3/main_ft_*.c; do
 		FUNC_NAME=$(basename "$TEST_SRC")
 	    FUNC_NAME=${FUNC_NAME#main_}
 		FUNC_NAME=${FUNC_NAME%.c}
@@ -383,33 +351,22 @@ bonus()
 	    echo -e "${ITALIC_BLUE}          Testing ${ITALIC_BLUE_BOLD}${FUNC_NAME}${RESET}${ITALIC_BLUE} ...  ${RESET}"
 	    echo -e "${ITALIC_BLUE}     ----------------------------------------------     ${RESET}"
 
+	    cc -Wall -Wextra -Werror "$TEST_SRC" -I "$LIBFT_DIR" "$LIB" -lbsd -o testing \
+	        >> "$BUILD_DIR/libft_build.log" 2>&1
 
-		cc -Wall -Wextra -Werror "$TEST_SRC" -I "$LIBFT_DIR" "$LIB" -lbsd -o testing \
-	    >> "$BUILD_DIR/libft_build.log" 2>&1
-		if [ $? -ne 0 ]; then
-	       	echo -e "${RED}✗ [-1] Compilation error!${RESET}\n"
-	       	echo -e "${FUNC_NAME}.c Compilation error! 0" >> "$BUILD_DIR/res_log.txt"
+	    if [ $? -ne 0 ]; then
+	        echo -e "${RED}✗ [-1] Compilation error!${RESET}\n"
+	        echo -e "${FUNC_NAME}.c Compilation error! 0" >> "$BUILD_DIR/res_log.txt"
 			echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
-	       	continue
-		fi
-
-		if [ -f "$LIBFT_DIR/${FUNC_NAME}_bonus.c" ]; then
-			norminette "$LIBFT_DIR/${FUNC_NAME}_bonus.c" >> "$BUILD_DIR/libft_build.log" 2>&1
-			if [ $? -ne 0 ]; then
-	        	echo -e "${RED}✗ [0] Norm error!${RESET}\n"
-	        	echo -e "${FUNC_NAME}.c Norm error! 0" >> "$BUILD_DIR/res_log.txt"
-				echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
-	        	continue
-	    	fi
-		else
-			norminette "$LIBFT_DIR/${FUNC_NAME}.c" >> "$BUILD_DIR/libft_build.log" 2>&1
-			if [ $? -ne 0 ]; then
-	        	echo -e "${RED}✗ [0] Norm error!${RESET}\n"
-	        	echo -e "${FUNC_NAME}.c Norm error! 0" >> "$BUILD_DIR/res_log.txt"
-				echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
-	        	continue
-	    	fi
-		fi
+	        continue
+	    fi
+		norminette "$LIBFT_DIR/${FUNC_NAME}.c" >> "$BUILD_DIR/libft_build.log" 2>&1
+		if [ $? -ne 0 ]; then
+	        echo -e "${RED}✗ [0] Norm error!${RESET}\n"
+	        echo -e "${FUNC_NAME}.c Norm error! 0" >> "$BUILD_DIR/res_log.txt"
+			echo -e "${WHITE_ON_RED} FAIL ${RESET}${ITALIC_BLUE} ${FUNC_NAME} ${RESET}\n"
+	        continue
+	    fi
 	    ./testing
 		wait $!
 		rm -f testing
@@ -566,10 +523,7 @@ run_step()
 ######################################MAIN CODE####################################
 
 starter
-if [ ! -f ~/.gotcha ]; then
-	joke
 
-               to
 for arg in "$@"; do
     [[ "$arg" == -*m* ]] && (( command *= 2 ))
     [[ "$arg" == -*l* ]] && (( command *= 3 ))
@@ -584,7 +538,7 @@ if (( command == 1 )) || (( command == -1 )); then
 	libh
 	run_step part1
 	run_step part2
-	bonus
+	part3
 else
 	(( command % 2 == 0 )) && run_step makefile
 	(( command % 3 == 0 )) && libh
@@ -592,7 +546,6 @@ else
 	(( command % 5 == 0 )) && run_step part1
 	(( command % 7 == 0 )) && makelib
 	(( command % 7 == 0 )) && run_step part2
-	(( command % 11 == 0 )) && bonus
+	(( command % 11 == 0 )) && part3
 fi
 res
-fi
